@@ -1,0 +1,63 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: linear-gradient(135deg, #1e1e2f, #3a3a5a);
+  color: white;
+  text-align: center;
+}
+
+section {
+  padding: 40px;
+}
+
+.hidden {
+  display: none;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #6c5ce7;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #4834d4;
+}
+
+input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  width: 60%;
+}
+
+.task-box {
+  margin: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: rgba(255,255,255,0.1);
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* ریسپانسیو */
+@media (max-width: 600px) {
+  input {
+    width: 90%;
+  }
+}
