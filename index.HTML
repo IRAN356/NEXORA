@@ -1,1 +1,118 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FocusFlow</title>
 
+<style>
+body {
+    margin:0;
+    font-family:sans-serif;
+    background:#0f172a;
+    color:white;
+    text-align:center;
+}
+
+h1 {
+    margin-top:20px;
+}
+
+.container {
+    margin-top:20px;
+}
+
+input {
+    padding:10px;
+    border-radius:10px;
+    border:none;
+    width:60%;
+}
+
+button {
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    background:#22c55e;
+    color:white;
+    cursor:pointer;
+}
+
+.task {
+    background:#1e293b;
+    margin:10px;
+    padding:10px;
+    border-radius:10px;
+    display:flex;
+    justify-content:space-between;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>🚀 FocusFlow</h1>
+
+<div class="container">
+    <input id="input" placeholder="کارتو بنویس...">
+    <button onclick="addTask()">+</button>
+</div>
+
+<div id="list"></div>
+
+<script>
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+function addTask(){
+    let input = document.getElementById("input");
+    let value = input.value.trim();
+
+    if(!value) return;
+
+    tasks.push({text:value, done:false});
+    save();
+    render();
+    input.value="";
+}
+
+function render(){
+    let list = document.getElementById("list");
+    list.innerHTML="";
+
+    tasks.forEach((t,i)=>{
+        let div = document.createElement("div");
+        div.className="task";
+
+        div.innerHTML = `
+            <span onclick="toggle(${i})" style="cursor:pointer; ${t.done?'text-decoration:line-through':''}">
+                ${t.text}
+            </span>
+            <button onclick="removeTask(${i})">❌</button>
+        `;
+
+        list.appendChild(div);
+    });
+}
+
+function removeTask(i){
+    tasks.splice(i,1);
+    save();
+    render();
+}
+
+function toggle(i){
+    tasks[i].done = !tasks[i].done;
+    save();
+    render();
+}
+
+function save(){
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+render();
+</script>
+
+</body>
+</html>
