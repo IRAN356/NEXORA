@@ -2,95 +2,42 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NAXORA</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #3a3a6a);
-      color: white;
-      text-align: center;
-    }
-
-    header {
-      padding: 30px;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .box {
-      margin: 30px auto;
-      padding: 20px;
-      width: 90%;
-      max-width: 400px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
-    }
-
-    input {
-      width: 90%;
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
-      margin-top: 10px;
-    }
-
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      background: #00c3ff;
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .tasks {
-      margin-top: 20px;
-      text-align: right;
-    }
-
-    .task {
-      background: rgba(0,0,0,0.3);
-      padding: 10px;
-      border-radius: 10px;
-      margin-top: 10px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>🔥 NAXORA</header>
+  <!-- صفحه شروع -->
+  <section id="home">
+    <h1>✨ NAXORA</h1>
+    <p>مدیریت کارها، تمرکز، و برنامه‌ریزی حرفه‌ای</p>
+    <button id="startBtn">شروع تجربه</button>
+  </section>
 
-<div class="box">
-  <h3>➕ اضافه کردن کار</h3>
-  <input id="taskInput" placeholder="مثلا: ساعت 7 بیدار شم">
-  <br>
-  <button onclick="addTask()">ثبت</button>
+  <!-- اپ -->
+  <section id="app" class="hidden">
+    
+    <header>
+      <h2>📋 مدیریت کارها</h2>
+    </header>
 
-  <div class="tasks" id="taskList"></div>
-</div>
+    <div class="task-box">
+      <input id="taskInput" placeholder="کار جدید بنویس...">
+      <button id="addTask">افزودن</button>
+    </div>
 
-<script>
-function addTask() {
-  let input = document.getElementById("taskInput");
-  let text = input.value;
+    <ul id="taskList"></ul>
 
-  if (text === "") return;
+    <div class="timer">
+      <h3>⏱ تایمر تمرکز</h3>
+      <p id="time">25:00</p>
+      <button id="startTimer">شروع</button>
+    </div>
 
-  let div = document.createElement("div");
-  div.className = "task";
-  div.innerText = text;
+  </section>
 
-  document.getElementById("taskList").appendChild(div);
-
-  input.value = "";
-}
-</script>
-
+<script src="app.js"></script>
 </body>
 </html>
