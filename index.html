@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FocusFlow</title>
+<title>FocusFlow Pro</title>
 
 <style>
 body {
@@ -14,19 +14,15 @@ body {
     text-align:center;
 }
 
-h1 {
-    margin-top:20px;
-}
+h1 { margin-top:20px; }
 
-.container {
-    margin-top:20px;
-}
+.container { margin-top:20px; }
 
 input {
     padding:10px;
     border-radius:10px;
     border:none;
-    width:60%;
+    margin:5px;
 }
 
 button {
@@ -43,8 +39,6 @@ button {
     margin:10px;
     padding:10px;
     border-radius:10px;
-    display:flex;
-    justify-content:space-between;
 }
 </style>
 
@@ -52,11 +46,14 @@ button {
 
 <body>
 
-<h1>🚀 FocusFlow</h1>
+<h1>🚀 FocusFlow Pro</h1>
 
 <div class="container">
-    <input id="input" placeholder="کارتو بنویس...">
-    <button onclick="addTask()">+</button>
+    <input id="text" placeholder="کارتو بنویس...">
+    <input type="date" id="date">
+    <input type="time" id="time">
+    <br>
+    <button onclick="addTask()">افزودن</button>
 </div>
 
 <div id="list"></div>
@@ -65,15 +62,15 @@ button {
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 function addTask(){
-    let input = document.getElementById("input");
-    let value = input.value.trim();
+    let text = document.getElementById("text").value;
+    let date = document.getElementById("date").value;
+    let time = document.getElementById("time").value;
 
-    if(!value) return;
+    if(!text) return;
 
-    tasks.push({text:value, done:false});
+    tasks.push({text, date, time, done:false});
     save();
     render();
-    input.value="";
 }
 
 function render(){
@@ -85,13 +82,16 @@ function render(){
         div.className="task";
 
         div.innerHTML = `
-            <span onclick="toggle(${i})" style="cursor:pointer; ${t.done?'text-decoration:line-through':''}">
+            <b onclick="toggle(${i})" style="${t.done?'text-decoration:line-through':''}">
                 ${t.text}
-            </span>
-            <button onclick="removeTask(${i})">❌</button>
+            </b><br>
+            📅 ${t.date || "-"} ⏰ ${t.time || "-"}<br><br>
+            <button onclick="removeTask(${i})">حذف</button>
         `;
 
         list.appendChild(div);
+
+        checkReminder(t);
     });
 }
 
@@ -109,6 +109,21 @@ function toggle(i){
 
 function save(){
     localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function checkReminder(task){
+    if(!task.date || !task.time) return;
+
+    let now = new Date();
+    let taskTime = new Date(task.date + "T" + task.time);
+
+    if(taskTime > now){
+        let diff = taskTime - now;
+
+        setTimeout(()=>{
+            alert("⏰ وقتشه: " + task.text);
+        }, diff);
+    }
 }
 
 render();
